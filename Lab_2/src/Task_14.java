@@ -3,21 +3,52 @@ import java.util.Arrays;
 import java.util.Scanner;
 public class Task_14 {
     public static void main(String[] args) {
-        System.out.println("Input your n:");
         Scanner input = new Scanner(System.in);
+        System.out.println("How you want to read matrix? Type 1 or 2");
+        int type = input.nextInt();
+        if (type != 1 && type != 2){
+            System.exit(0);
+        }
+        System.out.println("Input your n:");
         int n = input.nextInt();
         int[][] matrixArray = new int[n][n];
-        ArrayList<ArrayList<Integer>> matrixArrayList = new ArrayList<ArrayList<Integer>>();
-        System.out.println("Input your matrix:");
         ArrayList<Integer> layer = new ArrayList<>();
-        for(int i = 0; i < n; i++){
-            layer = new ArrayList<>();
-            for(int j = 0; j < n; j++){
-                matrixArray[i][j] = input.nextInt();
-                layer.add(matrixArray[i][j]);
+        ArrayList<ArrayList<Integer>> matrixArrayList = new ArrayList<ArrayList<Integer>>();
+        if(type == 1){
+            System.out.println("Input your matrix:");
+            for(int i = 0; i < n; i++){
+                layer = new ArrayList<>();
+                for(int j = 0; j < n; j++){
+                    matrixArray[i][j] = input.nextInt();
+                    layer.add(matrixArray[i][j]);
+                }
+                matrixArrayList.add(layer);
             }
-            matrixArrayList.add(layer);
+        }else{
+            String check = input.nextLine();
+            for(int i = 0; i < n; i++){
+                layer = new ArrayList<>();
+                String str = input.nextLine();
+                String[] argument = str.split(" ");
+                if(argument.length != n){
+                    throw new IndexOutOfBoundsException("Invalid number count");
+                }
+                for(int j = 0; j < n; j++){
+                    try{
+                        matrixArray[i][j] = Integer.parseInt(argument[j]) ;
+                        layer.add(Integer.parseInt(argument[j]));
+                    }
+                    catch (NumberFormatException e)
+                    {
+                    throw new NumberFormatException("Input mismatch");
+                    }
+
+                }
+                matrixArrayList.add(layer);
+            }
+
         }
+
         input.close();
        isMagicalOutput(isMagicalArray(matrixArray));
        isMagicalOutput(isMagicalArrayList(matrixArrayList, n));
